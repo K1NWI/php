@@ -2,9 +2,6 @@
 include('users.php');
 $sql = "SELECT * FROM usuarios";
 $result = mysqli_query($conn, $sql) or die(mysqli_error($conn));
-
-mysqli_close($conn);
-
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +26,11 @@ mysqli_close($conn);
                 <td><?php echo $row['correo'];?></td>
             </tr>  
         <?php }?>
-
     </table>
+
+    <?php
+    // Cierra la conexión después de usarla
+    mysqli_close($conn);
+    ?>
 </body>
 </html>
