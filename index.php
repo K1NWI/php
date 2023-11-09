@@ -1,8 +1,11 @@
 <?php 
 include('users.php');
-$slq="SELECT * FROM usuarios";
-$result = mysqli_query($conn,$slq) or die (mysqli_error($conn));
-$conn -> close();
+$sql = "SELECT * FROM usuarios";
+$result = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+
+mysqli_close($conn);
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,30 +15,21 @@ $conn -> close();
     <title>Hola</title>
 </head>
 <body>
-    <table aling="center" border ="5px" style ="width:80%; line_hegiht:30px">
-    <th colspan="3"><h2>Usuarios</h2></th>
-    <tr>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>Correo</th>
-    </tr>
-    <?php while ($row = mysqli_fetch_array($result)) {?>
+    <table align="center" border="5px" style="width:80%; line-height:30px">
+        <th colspan="3"><h2>Usuarios</h2></th>
         <tr>
-            <td><?php echo $row['nombre'];?></td>
-            <td><?php echo $row['apellido'];?></td>
-            <td><?php echo $row['correo'];?></td>
-        </tr>  
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Correo</th>
+        </tr>
+        <?php while ($row = mysqli_fetch_array($result)) {?>
+            <tr>
+                <td><?php echo $row['nombre'];?></td>
+                <td><?php echo $row['apellido'];?></td>
+                <td><?php echo $row['correo'];?></td>
+            </tr>  
         <?php }?>
-        
-    
-    
-    
-    
-    
-    
-    
+
     </table>
 </body>
 </html>
-
-?>

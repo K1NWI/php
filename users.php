@@ -1,8 +1,7 @@
-<?php 
-$conn=new mysqli("localhost","root","","Trabajadores2");
-$conm ->query("SET NAMES 'UTF8'");
-if (!$conn) {
-    die("conection failed: ".$conn->connect_error);
-
+<?php
+$conn = new mysqli("localhost", "root", "password", "Trabajadores2");
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+$conn->query("SET NAMES 'UTF8'");
 ?>
