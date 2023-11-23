@@ -50,21 +50,6 @@
         // Obtener el ID del usuario a editar
         $idUsuario = $_GET['id'];
 
-        // Consultar los datos del usuario a editar
-        $sql = "SELECT * FROM usuarios WHERE id = $idUsuario";
-        $result = mysqli_query($conn, $sql);
-        $fila = mysqli_fetch_assoc($result);
-
-        // Mostrar el formulario de edición con los datos del usuario
-        echo "<form method='post' action='editar.php?id=$idUsuario'>";
-        echo "<h2>Editar usuario</h2>";
-        echo "<label for='nombre'>Nombre:</label><br>";
-        echo "<input type='text' name='nombre' id='nombre' value='" . $fila['nombre'] . "'><br><br>";
-        echo "<label for='correo'>Correo:</label><br>";
-        echo "<input type='text' name='correo' id='correo' value='" . $fila['correo'] . "'><br><br>";
-        echo "<input type='submit' value='Guardar cambios'>";
-        echo "</form>";
-
         // Verificar si se recibió la orden de guardar cambios
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Obtener los nuevos datos del usuario
@@ -81,6 +66,21 @@
             } else {
                 echo "Error al editar el usuario: " . mysqli_error($conn);
             }
+        } else {
+            // Consultar los datos del usuario a editar
+            $sql = "SELECT * FROM usuarios WHERE id = $idUsuario";
+            $result = mysqli_query($conn, $sql);
+            $fila = mysqli_fetch_assoc($result);
+
+            // Mostrar el formulario de edición con los datos del usuario
+            echo "<form method='post' action='editar.php?id=$idUsuario'>";
+            echo "<h2>Editar usuario</h2>";
+            echo "<label for='nombre'>Nombre:</label><br>";
+            echo "<input type='text' name='nombre' id='nombre' value='" . $fila['nombre'] . "'><br><br>";
+            echo "<label for='correo'>Correo:</label><br>";
+            echo "<input type='text' name='correo' id='correo' value='" . $fila['correo'] . "'><br><br>";
+            echo "<input type='submit' value='Guardar cambios'>";
+            echo "</form>";
         }
     } else {
         echo "No se recibió el ID del usuario a editar";
