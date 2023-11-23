@@ -34,10 +34,38 @@
     } else {
         echo "No se encontraron resultados en la tabla.";
     }
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $nombre = $_POST['nombre'];
+        $correo = $_POST['correo'];
+        $sql = "INSERT INTO usuarios (nombre, correo) VALUES ('$nombre', '$correo')";
+        if (mysqli_query($conn, $sql)) {
+            echo "Nuevo registro creado correctamente.";
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+    }
+    if(isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $sql = "DELETE FROM usuarios WHERE id = $id";
+        if (mysqli_query($conn, $sql)) {
+            echo "Registro eliminado correctamente.";
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+    }
 
     // Cerrar la conexión
     mysqli_close($conn);
     ?>   
-    <!-- Puedes continuar con más contenido HTML -->
+    <form method="post" action="<?php echo $_SERVER ['PHP_SELF']; ?>" aling="center">
+     <h2>Agregar nuevo usuario</h2>   
+        <label for ="nombre">Nombre:</label><br>
+        <input type="text" name="nombre" id="nombre"><br>
+        <br>
+        <label for ="correo">Correo:</label><br>
+        <input type="text" name="correo" id="correo"><br>
+        <br>
+        <input type="submit" value="Agregar">
+    </form>
 </body>
 </html>
