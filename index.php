@@ -17,17 +17,17 @@
         die("Error en la conexión: " . mysqli_connect_error());
     }
     // Consulta SQL para obtener datos de la tabla
-    $sql = "SELECT * FROM nombre_de_la_tabla"; // Cambia 'nombre_de_la_tabla' al nombre de tu tabla
+    $sql = "SELECT * FROM usuarios"; // Cambia 'usuarios' al nombre de tu tabla
     $result = mysqli_query($conn, $sql);
     // Procesar y mostrar los datos en una tabla
     if (mysqli_num_rows($result) > 0) {
         echo "<table border='1'>";
-        echo "<tr><th>Nombre</th><th>Correo</th></tr>";
+        echo "<tr><th>Nombre</th><th>Correo</th><th>Acciones</th></tr>";
         while ($fila = mysqli_fetch_assoc($result)) {
             echo "<tr>";
             echo "<td>" . $fila["nombre"] . "</td>";
             echo "<td>" . $fila["correo"] . "</td>";
-            // Puedes agregar más campos según tu tabla
+            echo "<td><a href='?id=" . $fila["id"] . "'>Eliminar</a></td>";
             echo "</tr>";
         }
         echo "</table>";
