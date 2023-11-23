@@ -1,5 +1,3 @@
-<?php
-// FILEPATH: /c:/Users/J.M/Documents/GitHub/php/index.php
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,24 +73,12 @@
             echo "<tr>";
             echo "<td>" . $fila["nombre"] . "</td>";
             echo "<td>" . $fila["correo"] . "</td>";
-            echo "<td><a href='?id=" . $fila["id"] . "'>Eliminar</a> | <a href='editar.php?id=" . $fila["id"] . "'>Editar</a></td>";
+            echo "<td><a href='?id=" . $fila["id"] . "&action=delete'>Eliminar</a> | <a href='editar.php?id=" . $fila["id"] . "'>Editar</a></td>";
             echo "</tr>";
         }
         echo "</table>";
     } else {
         echo "No se encontraron resultados en la tabla.";
-    }
-    if(isset($_GET['id'])) {
-        $id = $_GET['id'];
-        $sql = "DELETE FROM usuarios WHERE id = $id";
-        if (mysqli_query($conn, $sql)) {
-            echo "Registro eliminado correctamente.";
-            // Redireccionar a la página actual para evitar la creación de un nuevo usuario al refrescar la página
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-        }
     }
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $nombre = $_POST['nombre'];
@@ -100,6 +86,18 @@
         $sql = "INSERT INTO usuarios (nombre, correo) VALUES ('$nombre', '$correo')";
         if (mysqli_query($conn, $sql)) {
             echo "Nuevo registro creado correctamente.";
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+    }
+    if(isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == 'delete') {
+        $id = $_GET['id'];
+        $sql = "DELETE FROM usuarios WHERE id = $id";
+        if (mysqli_query($conn, $sql)) {
+            echo "Registro eliminado correctamente.";
+            // Redireccionar a la página actual para evitar la creación de un nuevo usuario al refrescar la página
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
         }
