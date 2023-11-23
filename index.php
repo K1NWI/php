@@ -73,7 +73,7 @@
             echo "<tr>";
             echo "<td>" . $fila["nombre"] . "</td>";
             echo "<td>" . $fila["correo"] . "</td>";
-            echo "<td><a href='?id=" . $fila["id"] . "'>Eliminar</a> | <a href='editar.php?id=" . $fila["id"] . "'>Editar</a></td>";
+            echo "<td><a href='?id=" . $fila["id"] . "'>Eliminar</a> | <a href='?edit=" . $fila["id"] . "'>Editar</a></td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -115,8 +115,8 @@
     </form>
 
     <?php
-    if(isset($_GET['id'])) {
-        $id = $_GET['id'];
+    if(isset($_GET['edit'])) {
+        $id = $_GET['edit'];
         $sql = "SELECT * FROM usuarios WHERE id = $id";
         $result = mysqli_query($conn, $sql);
         if(mysqli_num_rows($result) > 0) {
@@ -134,23 +134,10 @@
             echo "<br>";
             echo "<input type='submit' value='Guardar'>";
             echo "</form>";
-
-            if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
-                $id = $_POST['id'];
-                $nombre = $_POST['nombre'];
-                $correo = $_POST['correo'];
-                $sql = "UPDATE usuarios SET nombre='$nombre', correo='$correo' WHERE id=$id";
-                if(mysqli_query($conn, $sql)) {
-                    echo "Usuario actualizado correctamente.";
-                } else {
-                    echo "Error al actualizar el usuario: " . mysqli_error($conn);
-                }
-            }
         } else {
             echo "No se encontró el usuario.";
         }
     }
-    
 
     if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
         $id = $_POST['id'];
