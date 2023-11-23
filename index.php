@@ -95,6 +95,7 @@
         $sql = "DELETE FROM usuarios WHERE id = $id";
         if (mysqli_query($conn, $sql)) {
             echo "Registro eliminado correctamente.";
+            echo "<script>window.location.reload();</script>"; // Recargar la página después de eliminar el usuario
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
         }
