@@ -124,7 +124,7 @@
             $nombre = $row['nombre'];
             $correo = $row['correo'];
             echo "<h2>Editar usuario</h2>";
-            echo "<form method='post' action='editar.php'>";
+            echo "<form method='post' action='".$_SERVER['PHP_SELF']."'>";
             echo "<input type='hidden' name='id' value='$id'>";
             echo "<label for='nombre'>Nombre:</label><br>";
             echo "<input type='text' name='nombre' id='nombre' value='$nombre'><br>";
@@ -134,10 +134,23 @@
             echo "<br>";
             echo "<input type='submit' value='Guardar'>";
             echo "</form>";
+
+            if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
+                $id = $_POST['id'];
+                $nombre = $_POST['nombre'];
+                $correo = $_POST['correo'];
+                $sql = "UPDATE usuarios SET nombre='$nombre', correo='$correo' WHERE id=$id";
+                if(mysqli_query($conn, $sql)) {
+                    echo "Usuario actualizado correctamente.";
+                } else {
+                    echo "Error al actualizar el usuario: " . mysqli_error($conn);
+                }
+            }
         } else {
             echo "No se encontró el usuario.";
         }
     }
+    
 
     if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
         $id = $_POST['id'];
