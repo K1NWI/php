@@ -1,3 +1,5 @@
+<?php
+// FILEPATH: /c:/Users/J.M/Documents/GitHub/php/index.php
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,21 +82,24 @@
     } else {
         echo "No se encontraron resultados en la tabla.";
     }
+    if(isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $sql = "DELETE FROM usuarios WHERE id = $id";
+        if (mysqli_query($conn, $sql)) {
+            echo "Registro eliminado correctamente.";
+            // Redireccionar a la página actual para evitar la creación de un nuevo usuario al refrescar la página
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+    }
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $nombre = $_POST['nombre'];
         $correo = $_POST['correo'];
         $sql = "INSERT INTO usuarios (nombre, correo) VALUES ('$nombre', '$correo')";
         if (mysqli_query($conn, $sql)) {
             echo "Nuevo registro creado correctamente.";
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-        }
-    }
-    if(isset($_GET['id'])) {
-        $id = $_GET['id'];
-        $sql = "DELETE FROM usuarios WHERE id = $id";
-        if (mysqli_query($conn, $sql)) {
-            echo "Registro eliminado correctamente.";
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
         }
